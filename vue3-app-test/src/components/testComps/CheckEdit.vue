@@ -12,10 +12,7 @@ export default {
 		modelValue: Boolean,
 		title: String,
 		titleModifiers: {
-			default: () => {
-				{
-				}
-			}
+			default: () => {{}}
 		}
 	},
 	setup(props, ctx) {
