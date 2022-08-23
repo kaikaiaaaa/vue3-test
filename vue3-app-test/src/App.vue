@@ -19,6 +19,7 @@
 import HelloWorld from './components/HelloWorld.vue'
 import CheckEdit from './components/testComps/CheckEdit.vue'
 import {computed, ref} from 'vue'
+import Error from "./components/testComps/Error";
 
 const defaultVals = [
 	{
@@ -36,7 +37,8 @@ export default {
 	name: 'App',
 	components: {
 		HelloWorld,
-		CheckEdit
+		CheckEdit,
+		Error
 	},
 	setup() {
 		const productRef = ref(defaultVals)
