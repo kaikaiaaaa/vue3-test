@@ -303,10 +303,10 @@ const Box3 = defineAsyncComponent({
 	loadingComponent: Loading,  //加载中组件
 	errorComponent: Error,  //加载失败组件
 	// errorComponent: {  //也可以直接写组件
-    // render() {
-    //   return h('div', '加载失败')
-    //   }
-    // }
+	// render() {
+	//   return h('div', '加载失败')
+	//   }
+	// }
 	delay: 200,
 	timeout: 3000,
 })
@@ -322,9 +322,6 @@ export default {
 ```
 
 可以将上述异步加载写在utils工具中，方便调用,详见utils目录下
-
-
-
 
 ### 3. router的变化，详情见router下目录
 
@@ -395,6 +392,12 @@ stop()
 
 
 ```
+
+```
+通过watch属性监听数据变化，例如将20变为90。中间的动画过程使用gsap实现
+```
+
+![img_8.png](img_8.png)
 
 转换unref,toRef
 
@@ -494,6 +497,14 @@ setUp()
 }
 ```
 
+```
+组件传参数时，如果传递的是一个props对象，那么需要通过计算属性
+```
+
+![img_6.png](img_6.png)
+
+![img_7.png](img_7.png)
+
 ### 7.生命周期函数对比
 
 ![img.png](img.png)
@@ -517,6 +528,7 @@ npm i nprogress
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 ```
+
 ```js
 /**
  * 使用
@@ -526,6 +538,7 @@ router.beforeEach((to, from, next) => {
     next()
 })
 ```
+
 # 如何按需引入antdesign插件
 
 ```html
@@ -568,3 +581,92 @@ import {
 新增代码：注册特定组件
 createApp(App).use(router).component(Button.name, Button).mount('#app')
 ```
+
+# vue3共享数据
+
+## 1.vue2中vuex
+```
+npm i vuex@next
+```
+```创建仓库main.js```
+
+![img_10.png](img_10.png)
+
+```设置store【store->loginUser】```
+
+![img_9.png](img_9.png)
+
+```设置store【store->index】```
+
+![img_11.png](img_11.png)
+
+```触发store中的方法```
+
+```js
+store.dispatch('loginUser/setLoginUser', {name: 'zhangsan'})
+
+//页面中
+import {useStore} from 'vuex'
+import {useRouter} from 'vue-router'
+
+const store = useStore()
+const user = store.dispatch('loginUser/setLoginUser', {name: 'zhangsan'})
+const router = useRouter()
+if (user) {
+    //页面跳转
+    router.push('/home')
+}
+```
+
+```获取store```
+```js
+const loginUser = computed(() => store.state.loginUser)
+```
+
+```首页使用```
+
+![img_12.png](img_12.png)
+
+## 2.vue3中使用全局数据共享
+
+详情见store目录下的登录demo
+
+使用见main.js及app.vue
+
+## 2.vue3中使用provide和inject全局数据共享
+
+
+```vue
+<template>
+    
+</template>
+<!--根组件中提供数据-->
+<script>
+    import {provide} from 'vue'
+    export default {
+        setup() {
+            provide('loginUser', {name: 'zhangsan'})
+        }
+    }
+</script>
+```
+```vue
+<!--后代组件-->
+<template>
+    <div>
+        <h1>app</h1>
+    </div>
+</template>
+<script>
+import {inject} from 'vue'
+export default {
+    setup() {
+        const loginUser = inject('loginUser')
+        console.log(loginUser)
+        return {}
+    }
+}   
+</script>
+
+```
+
