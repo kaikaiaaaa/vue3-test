@@ -670,3 +670,48 @@ export default {
 
 ```
 
+```setup语法糖```
+```
+组件不需要再次注册，直接在setup中使用
+不用return了
+
+```
+```vue
+<!--组件传值(子组件)-->
+<template>
+    <div @click="handleChangeName">
+        <h1>{{name}}</h1>
+    </div>
+</template>
+<script setup>
+//定义值
+const props = defineProps({
+    name: String
+})
+//定义事件
+const emit = defineEmits(['changeName'])
+emit('changeName', 'lxj')
+const handleChangeName = () => {
+	
+
+}
+
+</script>
+
+```
+```vue
+<!--组件传值(父组件)-->
+<template>
+    <div @click="handleChangeName">
+        {{name}}
+    </div>
+</template>
+<script setup>
+import {ref} from 'vue'
+const handleChangeName = () => {
+    console.log('changeName');
+}
+</script>
+
+
+```
