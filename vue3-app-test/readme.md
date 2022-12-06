@@ -393,6 +393,21 @@ stop()
 
 ```
 
+```js
+//watch 对象一定要深度监听
+const state = reactive({a: 1, b: 2})
+
+//监听reactive中state
+watch(() => state.yhArrPlay, (val) => {
+    // 监听当YH图 播放完后完成改变图标,数值初始化
+    if (val) {
+        dosth...
+    }
+}, { deep: true });
+
+
+```
+
 ```
 通过watch属性监听数据变化，例如将20变为90。中间的动画过程使用gsap实现
 ```
