@@ -2,18 +2,18 @@
 	<!--	<img alt="Vue logo" src="./assets/logo.png"/>-->
 	<!--	<HelloWorld msg="Hello Vue 3.12 + Vite"/>-->
 	<!--	选择组件 -->
-	<CheckEdit v-model="item.checked" v-model:title.trim="item.title" v-for="item in product"
-			   :key="item.id"></CheckEdit>
-	<div>
-		<span>选中的商品：</span>
-		<div v-for="(item,index) in checkedVals" :key="index">{{ item.title }}</div>
-	</div>
-	<a-button>Add</a-button>
-	<div>
-		导航
-		<router-link to="/home">home</router-link>
-		<router-link to="/about">about</router-link>
-	</div>
+<!--	<CheckEdit v-model="item.checked" v-model:title.trim="item.title" v-for="item in product"-->
+<!--			   :key="item.id"></CheckEdit>-->
+<!--	<div>-->
+<!--		<span>选中的商品：</span>-->
+<!--		<div v-for="(item,index) in checkedVals" :key="index">{{ item.title }}</div>-->
+<!--	</div>-->
+<!--	<a-button>Add</a-button>-->
+<!--	<div>-->
+<!--		导航-->
+<!--		<router-link to="/home">home</router-link>-->
+<!--		<router-link to="/about">about</router-link>-->
+<!--	</div>-->
 	<router-view></router-view>
 </template>
 
