@@ -19,19 +19,19 @@ import {onMounted, reactive, ref,nextTick} from "vue";
 onMounted(() => {
 				initChart()
 });
+let chart = ref(null)
 let state = reactive({
 				res: [],
 				chartData: {},
 				filter: '',
-				chart:null,
 })
 
 function initChart() {
-				state.chart = echarts.init(document.getElementById('chart'));
+				chart = echarts.init(document.getElementById('chart'));
 				// 注册渲染完成后的回调函数
 
 
-				state.chart.setOption({
+				chart.setOption({
 
 								tooltip: {
 												trigger: 'axis',
@@ -86,7 +86,7 @@ async function handleChange(event) {
 }
 async function initChartData(_res){
 				// 渲染图表
-				state.chart.setOption({
+				chart.setOption({
 								legend: {
 												data: Object.keys(state.res[0]).filter((key) => key !== 'ct'),
 								},
