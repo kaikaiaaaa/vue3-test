@@ -14,21 +14,24 @@
 <script setup>
 import * as echarts from "echarts";
 
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, reactive, ref,nextTick} from "vue";
 
 onMounted(() => {
 				initChart()
 });
-let chart = ref(null)
 let state = reactive({
 				res: [],
 				chartData: {},
-				filter: ''
+				filter: '',
+				chart:null,
 })
 
 function initChart() {
-				chart = echarts.init(document.getElementById('chart'));
-				chart.setOption({
+				state.chart = echarts.init(document.getElementById('chart'));
+				// 注册渲染完成后的回调函数
+
+
+				state.chart.setOption({
 
 								tooltip: {
 												trigger: 'axis',
@@ -42,6 +45,7 @@ function initChart() {
 								},
 								series: []
 				});
+
 }
 
 async function handleChange(event) {
@@ -70,6 +74,10 @@ async function handleChange(event) {
 																return obj;
 												}, {});
 								});
+								//将state.res中的ct转为时间戳
+								state.res.forEach((item) => {
+												item.ct = new Date(item.ct).getTime();
+								});
 								initChartData(state.res);
 
 				} catch (error) {
@@ -78,14 +86,16 @@ async function handleChange(event) {
 }
 async function initChartData(_res){
 				// 渲染图表
-				chart.setOption({
+				state.chart.setOption({
 								legend: {
 												data: Object.keys(state.res[0]).filter((key) => key !== 'ct'),
 								},
 								toolbox: {
 												show: true,
 												feature: {
-																saveAsImage: {}
+																saveAsImage: {
+																				excludeComponents: ['legend','toolbox'],
+																},
 												}
 								},
 								xAxis: {
@@ -127,7 +137,7 @@ async function initChartData(_res){
 																smooth: true,
 																showSymbol: false,
 																//data结构为[[时间戳，值]]
-																data:	_res.map((item) => [Date.parse(item.ct), item[key]]),
+																data:	_res.map((item) => [item.ct, item[key]]),
 																// data: [_res.reduce((accumulator, item) => {
 																// 				accumulator.push(item[key]);
 																// 				return accumulator;
